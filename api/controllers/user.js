@@ -1,5 +1,7 @@
 const status = require('../../utilities/server_status');
 const userModel = require('../models/user');
+const stateModel = require('../models/state');
+
 const fileSystem = require('fs');
 const dateUtils = require('../../utilities/date_utils');
 
@@ -10,14 +12,19 @@ const QUERY_MAX_COUNT = 50;
 exports.userLogin = (req, res) => {
     const email = req.body.email.toLowerCase();
     const password = req.body.password;
-
     userModel.login(email, password).then((result) => {
         if (result[0]) {
-            res.status(status.OK).send(result[1])
-           console.log (" good  Login")
+            const vv = result[1]['id'];
 
+            stateModel.makeUserOnline(vv).then((result) => {
+                if (result[0]) {
+                   console.log (" activated")
+                }
+            })
+       return res.status(status.OK).send(result[1])
+       
         } else {
-            res.status(status.BAD_REQUEST).json({
+            return res.status(status.BAD_REQUEST).json({
                 message: "Invalid Login",
             });
         }

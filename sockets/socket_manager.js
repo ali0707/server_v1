@@ -7,13 +7,15 @@ const INFORMATION = 'information';
 
 exports.startListener = (socketIO) => {
     socketIO.on(CONNECTED, socket => {
-        var userId = 0;
+        var userId = 0;            
+            socket.on(DIS_CONNECTED, () => {
+                stateModel.makeUserOffline(userId);
+            });
         socket.on(INFORMATION, id => {
             userId = id;
             stateModel.makeUserOnline(userId);
         });
-        socket.on(DIS_CONNECTED, () => {
-            stateModel.makeUserOffline(userId);
-        });
+        
+      
     });
 };

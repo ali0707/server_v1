@@ -17,7 +17,6 @@ for line in text:
 	# Convert the characters in line to 
 	# lowercase to avoid case mismatch 
 	line = line.lower() 
-
 	# Split the line into words 
 	words = line.split(" ,") 
 

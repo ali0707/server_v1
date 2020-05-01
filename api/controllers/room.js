@@ -61,7 +61,7 @@ exports.createNewroom = (req, res) => {
     roomModel.createNewroom(args).then(result => {
         if (result[0]) {
             const roomid = result[1];
-             notificationModel.createQuestionNotification(toUser, roomid);
+             notificationModel.createQuestionNotification(fromUser, roomid);
             res.status(status.OK).json({
                 message: "room created",
             });

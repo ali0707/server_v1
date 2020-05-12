@@ -21,9 +21,11 @@ exports.getQuestionAnswer = (req, res) => {
 
 exports.createNewAnswer = (req, res) => {
     const body = req.body.body;
-    const questionId = req.body.questionId;
+    const questionId = req.body.roomId;
     const toUser = req.body.toUser;
     const fromUser = req.body.fromUser;
+    const anonymous = req.body.anonymous;
+
     const currentDate = Date.now();
 
     const args = [
@@ -31,6 +33,7 @@ exports.createNewAnswer = (req, res) => {
         questionId,
         toUser,
         fromUser,
+        anonymous,
         currentDate
     ];
 

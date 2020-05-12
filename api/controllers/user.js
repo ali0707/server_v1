@@ -15,16 +15,18 @@ exports.userLogin = (req, res) => {
     userModel.login(email, password).then((result) => {
         if (result[0]) {
             const vv = result[1]['id'];
+             res.status(status.OK).send(result[1])
 
-            stateModel.makeUserOnline(vv).then((result) => {
+            retustateModel.makeUserOnline(vv).then((result) => {
                 if (result[0]) {
                    console.log (" activated")
+                  return res.status(status.OK).send(result[1])
+
                 }
             })
-       return res.status(status.OK).send(result[1])
        
         } else {
-            return res.status(status.BAD_REQUEST).json({
+             res.status(status.BAD_REQUEST).json({
                 message: "Invalid Login",
             });
         }

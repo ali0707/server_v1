@@ -9,11 +9,14 @@ exports.startListener = (socketIO) => {
     socketIO.on(CONNECTED, socket => {
         var userId = 0;            
             socket.on(DIS_CONNECTED, () => {
+                console.log (" activated")
                 stateModel.makeUserOffline(userId);
             });
         socket.on(INFORMATION, id => {
             userId = id;
             stateModel.makeUserOnline(userId);
+            console.log (" activated")
+
         });
         
       

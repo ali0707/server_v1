@@ -23,13 +23,13 @@ exports.getQuestionAnswer = args => new Promise((resolve, reject) => {
                                    fromUser AS fromUserId,
                                    (SELECT username FROM users WHERE fromUser = users.id) AS fromUsername, 
                                    (SELECT avatar FROM users WHERE toUser = users.id) AS fromUserAvatar,
-                                   questionId,
-                                   (SELECT title FROM questions WHERE questionId = questions.id) AS questionBody,
-                                   (SELECT anonymous FROM questions WHERE questionId = questions.id) AS isAnonymous,
+                                   roomId,
+                                   (SELECT title FROM room WHERE roomId = room.id) AS questionBody,
+                                   (SELECT answer FROM room WHERE roomId = room.id) AS isAnonymous,
                                    (SELECT COUNT(*) FROM reactions WHERE answerId = answers.id) AS reactions,
                                    (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM reactions WHERE answerId = answers.id AND toUser = ?) AS isReacted,
                                    answerdDate
-                                   FROM answers WHERE id = ?`;
+                                   FROM answers WHERE id = ? `;
     database.query(query, args, (err, result) => {
         if (err) throw err;
         resolve(result);
@@ -37,7 +37,7 @@ exports.getQuestionAnswer = args => new Promise((resolve, reject) => {
 });
 
 exports.createNewAnswer = args => new Promise((resolve, reject) => {
-    const query = 'INSERT INTO answers(body, questionId, toUser, fromUser, answerdDate) VALUES (?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO answers(body, roomId, toUser, fromUser, anonymous, answerdDate) VALUES (?, ?, ?, ?, ?, ?)';
 
     database.query(query, args, (err, result) => {
         if (err) {
@@ -55,7 +55,6 @@ exports.createNewAnswer = args => new Promise((resolve, reject) => {
 
 exports.deleteAnswer = args => new Promise((resolve, reject) => {
     const query = 'DELETE FROM answers WHERE id = ?';
-
     database.query(query, args, (err, result => {
         if (err) throw err;
         const isValidRequest = result['affectedRows'] > 0;

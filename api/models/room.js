@@ -1,4 +1,5 @@
 const database = require('../../database/config');
+var app= require('express')();
 
 exports.loginroom = (code) => new Promise((resolve, reject) => {
     const sqlQuery = `SELECT id, title, fromUser FROM room WHERE Code = ?  LIMIT 1`;
@@ -41,13 +42,13 @@ exports.createNewroom = user => new Promise((resolve, reject) => {
 
 exports.getRoomByID = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT id,
-                                   title,
+                                  title,
                                    toUser AS toUserId,
                                    (SELECT username FROM users WHERE toUser = users.id) AS toUserName,
                                    fromUser AS fromUserId,
                                    (SELECT username FROM users WHERE fromUser = users.id) AS fromUserName,
-                                   (SELECT avatar FROM users WHERE fromUser = users.id) AS fromUserAvatar                                   FROM room WHERE id = ? LIMIT 1`;
-
+                                   (SELECT avatar FROM users WHERE fromUser = users.id) AS fromUserAvatar  
+                            FROM room WHERE id = ? LIMIT 1`;
     database.query(query, args, (err, result) => {
         if (err) throw err;
         if (result.length == 1) {

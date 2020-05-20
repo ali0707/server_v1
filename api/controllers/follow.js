@@ -10,7 +10,7 @@ exports.getUserFollowing = (req, res) => {
     const id = req.body.id;
     var page = req.query.page;
     var page_size = req.query.page_size;
-
+    
     if (page == null) {
         page = QUERY_DEFAULT_PAGE;
     }

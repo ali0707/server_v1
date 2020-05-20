@@ -5,6 +5,11 @@ const router = express.Router();
 
 router.get('/', controller.getUserFeed);
 
+//router.get('/:id/', controller.getBestid);
+
 router.get('/home', controller.getHomeFeed);
+
+router.get('/:roomId', controller.getBestFeed);
+
 
 module.exports = router;

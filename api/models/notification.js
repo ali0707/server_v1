@@ -79,7 +79,6 @@ exports.createFollowNotification = (toUser, fromUser) => new Promise((resolve, r
     ];
     this.createNewNotification(args).then(state => resolve(state));
 });
-
 exports.createQuestionNotification = (toUser, roomId) => new Promise((resolve, reject) => {
     const args = [
         toUser,
@@ -112,9 +111,8 @@ exports.deleteAllNotifications = () => new Promise((resolve, reject) => {
         resolve(isValidDelete);
     });
 });
-
 exports.deleteNotificationByID = args => new Promise((resolve, reject) => {
-    const query = 'DELETE FROM notifications WHERE id = ?';
+    const query = 'DELETE FROM notifications WHERE toUser = ?';
     database.query(query, args, (err, result) => {
         if (err) throw err;
         const isValidDelete = result['affectedRows'] == 1;

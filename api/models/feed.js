@@ -18,7 +18,27 @@ exports.getUserFeed = (args) => new Promise((resolve, reject) => {
        resolve(result)
     });
 });
-
+/*
+exports.getBestFeed = (args) => new Promise((resolve, reject) => {
+    const query =
+    'SELECT  COUNT(*) as "number",body FROM answers  WHERE roomId = ? GROUP by body ORDER BY "number" asc limit 1';
+    database.query(query, args, (err, result) => {
+       if(err) throw err;
+       resolve(result)
+    });
+});
+*/
+exports.getBestFeed = args => new Promise((resolve, reject) => {
+    const query ='SELECT  id ,COUNT(*) as "number",body FROM answers  WHERE roomId = ? GROUP by body ORDER BY 2  DESC limit 1';
+    database.query(query, args, (err, result) => {
+        if (err) throw err;
+        if (result.length == 1) {
+            resolve([true, result[0]]);
+        } else {
+            resolve([false]);
+        }
+    });
+});
 exports.getHomeFeed = (args) => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT answers.id AS answerId, 
                                     answers.body AS answerBody,

@@ -109,9 +109,8 @@ exports.deleteAllNotifications = (req, res) => {
 };
 
 exports.deleteNotificationByID = (req, res) => {
-    const notificationID = req.params.id;
-
-    notificationModel.deleteNotificationByID(notificationID)
+    const id = req.query.toUser;
+    notificationModel.deleteNotificationByID(id)
         .then(state => {
             if (state) {
                 res.status(status.OK).json({

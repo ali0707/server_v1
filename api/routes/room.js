@@ -8,7 +8,4 @@ const router = express.Router();
 router.post('/createRoom', controller.createNewroom);
 router.post('/loginroom', controller.roomLogin);
 router.get('/:id/', controller.getRoomByID);
-
-
-
 module.exports = router;

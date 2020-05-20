@@ -4,7 +4,7 @@ const notificationModel = require('../models/notification');
 
 exports.getAnswerByID = (req, res) => {
     
-    const id = req.params.id;
+    const id = req.body.id;
     answerModel.getAnswerByID(id).then(result => {
         res.status(status.OK).json(result);
     });

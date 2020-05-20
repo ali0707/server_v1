@@ -9,24 +9,23 @@ const QUERY_DEFAULT_PAGE = 0;
 const QUERY_DEFAULT_PAGE_SIZE = 25;
 const QUERY_MAX_COUNT = 50;
 
+
+//retustateModel.makeUserOnline(vv).then((result) => {
+  //  if (result[0]) {
+    //   console.log (" activated")
+   // }
+//   })
+
 exports.userLogin = (req, res) => {
     const email = req.body.email.toLowerCase();
     const password = req.body.password;
     userModel.login(email, password).then((result) => {
         if (result[0]) {
             const vv = result[1]['id'];
-             res.status(status.OK).send(result[1])
+            res.status(status.OK).send(result[1])
 
-            retustateModel.makeUserOnline(vv).then((result) => {
-                if (result[0]) {
-                   console.log (" activated")
-                  return res.status(status.OK).send(result[1])
-
-                }
-            })
-       
         } else {
-             res.status(status.BAD_REQUEST).json({
+               res.status(status.BAD_REQUEST).json({
                 message: "Invalid Login",
             });
         }

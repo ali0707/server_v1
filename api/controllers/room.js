@@ -35,7 +35,8 @@ exports.roomLogin = (req, res) => {
    roomModel.loginroom(code).then((result) => {
         if (result[0]) {
             res.status(status.OK).send(result[1])
-           console.log ("good Login")
+            console.log ("good Login")
+
         } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Invalid Login",});
@@ -77,7 +78,6 @@ exports.createNewroom = (req, res) => {
 
 exports.getRoomByID = (req, res) => {
     const id = req.params.id;
-
     roomModel.getRoomByID(id).then(result => {
         if (result) {
             res.status(status.OK).json(result[1]);
@@ -88,4 +88,5 @@ exports.getRoomByID = (req, res) => {
         }
     });
 };
+
 

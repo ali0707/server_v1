@@ -13,7 +13,7 @@ router.post('/',  controller.createNewNotification);
 
 router.delete('/',  controller.deleteAllNotifications);
 
-router.delete('/:id', controller.deleteNotificationByID);
+router.delete('/:toUser', controller.deleteNotificationByID);
 
 router.put('/open/:id', controller.makeNotificationReaded);
 

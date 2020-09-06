@@ -89,4 +89,15 @@ exports.getRoomByID = (req, res) => {
     });
 };
 
-
+exports.getCodeByID = (req, res) => {
+    const id = req.params.toUser;
+    roomModel.getCodeByID(id).then(result => {
+        if (result) {
+            res.status(status.OK).json(result[1]);
+        } else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Invalid ID"
+            });
+        }
+    });
+};

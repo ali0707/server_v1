@@ -7,10 +7,7 @@ server.listen(port, () => console.debug("Server start at PORT 3000"));
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
-
 const socketio = require('socket.io')
-
 // parse application/x-www-form-urlencoded
 // { extended: true } : support nested object
 // Returns middleware that ONLY parses url-encoded bodies and 
@@ -86,7 +83,8 @@ io.on('connection',function(socket) {
             messageContent : messageContent,
             roomName : roomName
         }
-        socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
+        socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData))
+         // Need to be parsed into Kotlin object in Kotlin
     })
 
      socket.on('typing',function(roomNumber){ //Only roomNumber is needed here

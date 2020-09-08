@@ -43,6 +43,7 @@ exports.getHomeFeed = (args) => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT answers.id AS answerId, 
                                     answers.body AS answerBody,
                                     (SELECT id FROM users WHERE answers.fromUser = users.id) AS fromUserId,
+                                    (SELECT code FROM room WHERE answers.roomId= room.id) AS codeRoom,
                                     (SELECT username FROM users WHERE answers.fromUser = users.id) AS fromUsername,
                                     (SELECT email FROM users WHERE answers.fromUser = users.id) AS fromUserEmail,
                                     (SELECT avatar FROM users WHERE answers.fromUser = users.id) AS fromUserAvatar,

@@ -90,7 +90,7 @@ exports.getRoomByID = (req, res) => {
 };
 
 exports.getCodeByID = (req, res) => {
-    const id = req.query.toUser;
+    const id = req.body.toUser;
     var page = req.query.page;
     var page_size = req.query.page_size;
 

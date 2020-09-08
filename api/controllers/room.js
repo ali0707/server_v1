@@ -90,14 +90,25 @@ exports.getRoomByID = (req, res) => {
 };
 
 exports.getCodeByID = (req, res) => {
-    const id = req.params.toUser;
-    roomModel.getCodeByID(id).then(result => {
-        if (result) {
-            res.status(status.OK).json(result[1]);
-        } else {
-            res.status(status.BAD_REQUEST).json({
-                message: "Invalid ID"
-            });
-        }
-    });
+    const id = req.query.toUser;
+    var page = req.query.page;
+    var page_size = req.query.page_size;
+
+    if (page == null) {
+        page = QUERY_DEFAULT_PAGE;
+    }
+
+    if (page_size == null || page_size > QUERY_MAX_COUNT) {
+        page_size = QUERY_DEFAULT_PAGE_SIZE;
+    }
+
+    const offset = page * page_size;
+
+    const args = [id, parseInt(page_size), parseInt(offset)];
+
+    roomModel.getCodeByID(args)
+        .then(result => {
+            console.log(`result ${id}  : ${result.length}`)
+            res.status(status.OK).json(result);
+        });
 };

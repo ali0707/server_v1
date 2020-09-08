@@ -48,7 +48,7 @@ exports.getRoomByID = args => new Promise((resolve, reject) => {
                                    fromUser AS fromUserId,
                                    (SELECT username FROM users WHERE fromUser = users.id) AS fromUserName,
                                    (SELECT avatar FROM users WHERE fromUser = users.id) AS fromUserAvatar  
-                            FROM room WHERE id = ? LIMIT 1`;
+                            FROM room WHERE id =? LIMIT 1`;
     database.query(query, args, (err, result) => {
         if (err) throw err;
         if (result.length == 1) {
@@ -78,19 +78,10 @@ exports.getUserrooms = args => new Promise((resolve, reject) => {
 });
 
 
-exports.getCodeByID = args => new Promise((resolve, reject) => {
-    const query = `SELECT  code,
-    toUser AS toUserId,
-    (SELECT username FROM users WHERE toUser = users.id) AS toUserName,
-    fromUser AS fromUserId,
-    (SELECT username FROM users WHERE fromUser = users.id) AS fromUserName                           			 						
-    	FROM room WHERE toUser = ? `;
-    database.query(query, args, (err, result) => {
-        if (err) throw err;
-        if (result.length == 1) {
-            resolve([true, result[0]]);
-        } else {
-            resolve([false]);
-        }
+    exports.getCodeByID = args => new Promise((resolve, reject) => {
+        const query = 'SELECT code FROM room  WHERE toUser = ?';
+        database.query(query, args, (err, result) => {
+            if (err) throw err;
+            resolve(result);
+        });
     });
-});

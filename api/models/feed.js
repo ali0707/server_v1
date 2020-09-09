@@ -51,10 +51,8 @@ exports.getHomeFeed = (args) => new Promise((resolve, reject) => {
                                     (SELECT username FROM users WHERE answers.toUser = users.id) AS toUsername,
                                     (SELECT email FROM users WHERE answers.toUser = users.id) AS toUserEmail,
                                     (SELECT avatar FROM users WHERE answers.toUser = users.id) AS toUserAvatar,
-                                    (SELECT COUNT(*) FROM reactions WHERE answerId = answers.id) AS reactions,
-                                    (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM reactions WHERE answerId = answers.id AND fromUser = ?) AS isReacted,
-                                    answers.answerdDate AS answerDate
-                   FROM answers`;  
+                                    (SELECT COUNT(*) FROM reactions WHERE answerId = answers.id) AS reactions
+                   FROM answers WHERE fromUser = ? `;  
                                  
     database.query(query, args, (err, result) => {
        if(err) throw err;

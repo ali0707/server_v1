@@ -87,18 +87,16 @@ exports.getBestFeed = (req, res) => {
 };
 
 exports.getHomeFeed = (req, res) => {
-    const id = req.query.id;
+    const id = req.query.userId;
     var page = req.query.page;
     var page_size = req.query.page_size;
 
     if (page == null) {
         page = QUERY_DEFAULT_PAGE;
     }
-
     if (page_size == null || page_size > QUERY_MAX_COUNT) {
         page_size = QUERY_DEFAULT_PAGE_SIZE;
     }
-
     const offset = page * page_size;
 
     const args = [id, id, parseInt(page_size), parseInt(offset)]

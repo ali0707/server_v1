@@ -79,7 +79,7 @@ exports.getUserrooms = args => new Promise((resolve, reject) => {
 
 
     exports.getCodeByID = args => new Promise((resolve, reject) => {
-        const query = 'SELECT  DISTINCT code FROM room  WHERE toUser = ?';
+        const query = 'SELECT DISTINCT code FROM room  WHERE toUser = ?';
         database.query(query, args, (err, result) => {
             if (err) throw err;
             resolve(result);
